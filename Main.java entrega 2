@@ -1,0 +1,61 @@
+import java.util.ArrayList;
+
+
+public class Main {
+
+    
+    public void activarAlarma() {
+        System.out.println("Alarma de incendio activada");
+    }
+
+   
+    public void Incendio(String ubicacion, String gravedad) {
+        System.out.println("Incendio reportado en " + ubicacion + " con gravedad: " + gravedad);
+    }
+
+   
+    public String EstadoZona(String ubicacion) {
+        
+        String[] estados = {"Normal", "Incendio leve", "Incendio grave"};
+        int index = (int) (Math.random() * estados.length);
+        return estados[index];
+    }
+
+    
+    public void Notificaciones(ArrayList<String> destinatarios, String mensaje) {
+        for (String destinatario : destinatarios) {
+            System.out.println("Mensaje enviado a " + destinatario + ": " + mensaje);
+        }
+    }
+
+    
+    public double Temperatura(String ubicacion) {
+        
+        return Math.random() * 100; 
+    }
+
+    
+    public static void main(String[] args) {
+        Main sistema = new Main();
+
+        
+        sistema.activarAlarma();
+
+        
+        sistema.Incendio("Calle Principal", "Grave");
+
+        
+        String estadoZona = sistema.EstadoZona("Calle Principal");
+        System.out.println("Estado de la zona: " + estadoZona);
+
+       
+        ArrayList<String> destinatarios = new ArrayList<>();
+        destinatarios.add("Bomberos");
+        destinatarios.add("Residentes");
+        sistema.Notificaciones(destinatarios, "Incendio detectado en su área");
+
+        
+        double temperatura = sistema.Temperatura("Calle Principal");
+        System.out.println("Temperatura actual en la zona: " + temperatura + " grados Celsius");
+    }
+}
