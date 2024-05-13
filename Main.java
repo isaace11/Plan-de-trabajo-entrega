@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -6,45 +7,35 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         // Solicitar información al usuario
-        System.out.println("Ingrese su nombre:");
-        String nombre = scanner.nextLine();
-
-        System.out.println("Ingrese su dirección:");
-        String direccion = scanner.nextLine();
-
-        // Preguntar al usuario si es bombero
-        System.out.println("¿Es usted bombero? (si/no):");
-        String respuesta = scanner.nextLine();
-        boolean esBombero = respuesta.equalsIgnoreCase("si");
+        String nombre = EntradaUsuarios.solicitarNombre(scanner);
+        String direccion = EntradaUsuarios.solicitarDireccion(scanner);
+        boolean esBombero = EntradaUsuarios.esBombero(scanner);
 
         // Mostrar la información ingresada por el usuario
-        System.out.println("Información ingresada:");
-        System.out.println("Nombre: " + nombre);
-        System.out.println("Dirección: " + direccion);
-        System.out.println("¿Es bombero?: " + (esBombero ? "Sí" : "No"));
+        EntradaUsuarios.mostrarInformacion(nombre, direccion, esBombero);
 
         // Enviar alerta según la información del usuario
         if (esBombero) {
-            GestionNotificaciones.enviarAlertaBombero(nombre, direccion);
+            GestionNotificaciones.enviarAlertaBombero(direccion);
         } else {
-            GestionNotificaciones.enviarAlertaResidente(nombre, direccion);
+            GestionNotificaciones.enviarAlertaResidente(direccion);
         }
 
         // Activar alarma
-        AlertaTemperatura.activarAlarma();
+        ActivadorAlarma.activarAlarma();
 
         // Reportar incendio
-        AlertaTemperatura.Incendio("Calle Principal", "Grave");
+        GestionNotificaciones.reportarIncendio("Calle Principal", "Grave");
 
         // Evaluar estado de la zona
-        String estadoZona = AlertaTemperatura.EstadoZona("Calle Principal");
+        String estadoZona = GestionNotificaciones.evaluarEstadoZona("Calle Principal");
         System.out.println("Estado de la zona: " + estadoZona);
 
         // Enviar notificaciones
         ArrayList<String> destinatarios = new ArrayList<>();
         destinatarios.add("Bomberos");
         destinatarios.add("Residentes");
-        GestionNotificaciones.Notificaciones(destinatarios, "Incendio detectado en su área");
+        GestionNotificaciones.enviarNotificaciones(destinatarios, "Incendio detectado en su área");
 
         // Detectar temperaturas altas
         AlertaTemperatura alertaTemperatura = new AlertaTemperatura();
